@@ -1,40 +1,36 @@
 import { it, expect, afterEach, beforeAll, afterAll, describe } from "vitest";
 import { render, screen, cleanup } from "@testing-library/react";
-import { rest } from "msw";
+import { rest, RestHandler } from "msw";
 import { setupServer } from "msw/node";
 import { User, fetchUser } from "./User";
 
-const successHandler = rest.get(
-  "https://jsonplaceholder.typicode.com/users/1",
-  (req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json({
-        id: 1,
-        name: "John Doe",
-        username: "jd",
-      })
-    );
-  }
-);
-
-const failedHandler = rest.get(
-  "https://jsonplaceholder.typicode.com/users/1",
-  (req, res, ctx) => {
-    return res(
-      ctx.status(404),
-      ctx.json({
-        message: "Not Found",
-      })
-    );
-  }
-);
-
-const successServer = setupServer(successHandler);
-
-const failedServer = setupServer(failedHandler);
-
 describe("Success pattern", () => {
+  const successHandler: RestHandler = rest.get(
+    "https://jsonplaceholder.typicode.com/users/:userId",
+    (req, res, ctx) => {
+      const { userId } = req.params;
+      if (userId === "1") {
+        return res(
+          ctx.status(200),
+          ctx.json({
+            id: 1,
+            name: "John Doe",
+            username: "jd",
+          })
+        );
+      } else {
+        return res(
+          ctx.status(404),
+          ctx.json({
+            message: "Not Found",
+          })
+        );
+      }
+    }
+  );
+
+  const successServer = setupServer(successHandler);
+
   beforeAll(() => {
     successServer.listen();
   });
@@ -66,6 +62,20 @@ describe("Success pattern", () => {
 });
 
 describe("Failed pattern", () => {
+  const failedHandler: RestHandler = rest.get(
+    "https://jsonplaceholder.typicode.com/users/:userId",
+    (_, res, ctx) => {
+      return res(
+        ctx.status(404),
+        ctx.json({
+          message: "Not Found",
+        })
+      );
+    }
+  );
+
+  const failedServer = setupServer(failedHandler);
+
   beforeAll(() => {
     failedServer.listen();
   });
