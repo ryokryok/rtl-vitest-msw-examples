@@ -1,7 +1,7 @@
-import { ChangeEvent, ReactElement, useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useState } from "react";
 import { describe, test, expect, afterEach } from "vitest";
-import { render, screen, cleanup } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { screen, cleanup } from "@testing-library/react";
+import { setup } from "./testUtils";
 
 const useInput = (initialValue: string = "") => {
   const [input, setInput] = useState(initialValue);
@@ -23,31 +23,29 @@ const Input: React.FC<TestConfig> = ({ initialValue }) => {
   return <input value={input} onChange={handler} />;
 };
 
-const setup = (jsx: ReactElement) => {
-  return {
-    user: userEvent.setup(),
-    ...render(jsx),
-    input: screen.getByRole<HTMLInputElement>("textbox"),
-  };
-};
-
 afterEach(() => {
   cleanup();
 });
 
 describe("useInput", () => {
   test("initial value is empty", () => {
-    const { input } = setup(<Input initialValue="" />);
+    setup(<Input initialValue="" />);
+    const input = screen.getByRole<HTMLInputElement>("textbox");
+
     expect(input.value).toBe("");
   });
 
   test("initial value is hello", () => {
-    const { input } = setup(<Input initialValue="hello" />);
+    setup(<Input initialValue="hello" />);
+    const input = screen.getByRole<HTMLInputElement>("textbox");
+
     expect(input.value).toBe("hello");
   });
 
   test("update input", async () => {
-    const { user, input } = setup(<Input initialValue="" />);
+    const { user } = setup(<Input initialValue="" />);
+    const input = screen.getByRole<HTMLInputElement>("textbox");
+
     await user.type(input, "aaa");
     expect(input.value).toBe("aaa");
   });
