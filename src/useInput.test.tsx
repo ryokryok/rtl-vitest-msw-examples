@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, FC, useCallback, useState } from "react";
 import { describe, test, expect, afterEach } from "vitest";
 import { screen, cleanup } from "@testing-library/react";
 import { setup } from "./testUtils";
@@ -18,7 +18,7 @@ type TestConfig = {
   initialValue: string;
 };
 
-const Input: React.FC<TestConfig> = ({ initialValue }) => {
+const Input: FC<TestConfig> = ({ initialValue }) => {
   const { input, handler } = useInput(initialValue);
   return <input value={input} onChange={handler} />;
 };
