@@ -1,8 +1,12 @@
 {
   "name": "vitest-react-ts",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
+  "license": "MIT",
+  "author": {
+    "name": "Mr_ozin"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
