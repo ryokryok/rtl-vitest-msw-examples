@@ -53,11 +53,11 @@ describe("Success pattern", () => {
     render(<User id="1" />);
 
     // check loading text
-    expect(screen.getByTestId("loading-text").innerHTML).toBe("Loading...");
+    expect(screen.getByText("Loading...")).not.toBeUndefined();
 
     // show user info
-    expect((await screen.findByTestId("user-name")).innerHTML).toBe("John Doe");
-    expect((await screen.findByTestId("user-username")).innerHTML).toBe("jd");
+    expect(await screen.findByText("John Doe")).not.toBeUndefined();
+    expect(await screen.findByText("jd")).not.toBeUndefined();
   });
 });
 
@@ -94,11 +94,9 @@ describe("Failed pattern", () => {
     render(<User id="1" />);
 
     // check loading text
-    expect(screen.getByTestId("loading-text").innerHTML).toBe("Loading...");
+    expect(screen.getByText("Loading...")).not.toBeUndefined();
 
     // show not found
-    expect((await screen.findByTestId("error-text")).innerHTML).toBe(
-      "Not Found"
-    );
+    expect(await screen.findByText("Not Found")).not.toBeUndefined();
   });
 });

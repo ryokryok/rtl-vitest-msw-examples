@@ -6,16 +6,14 @@ import { ThemeContext, ThemeProvider } from "./ThemeContext";
 
 function DisplayTheme() {
   const { theme } = useContext(ThemeContext);
-  return <p data-testid="theme-display">Current theme is {theme}</p>;
+  return <p>Current theme is {theme}</p>;
 }
 
 function UpdateTheme() {
   const { update } = useContext(ThemeContext);
   return (
     <>
-      <button data-testid="theme-toggle" onClick={update}>
-        toggle theme
-      </button>
+      <button onClick={update}>toggle theme</button>
     </>
   );
 }
@@ -31,9 +29,7 @@ it("Theme context, initial theme is light", () => {
     </ThemeProvider>
   );
 
-  expect(screen.getByTestId("theme-display").innerHTML).toBe(
-    "Current theme is light"
-  );
+  expect(screen.getByText("Current theme is light")).not.toBeUndefined();
 });
 
 it("toggle light to dark", async () => {
@@ -44,8 +40,7 @@ it("toggle light to dark", async () => {
     </ThemeProvider>
   );
 
-  await user.click(screen.getByTestId("theme-toggle"));
-  expect(screen.getByTestId("theme-display").innerHTML).toBe(
-    "Current theme is dark"
-  );
+  await user.click(screen.getByRole("button"));
+
+  expect(screen.getByText("Current theme is dark")).not.toBeUndefined();
 });

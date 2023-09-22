@@ -41,17 +41,15 @@ export const User: FC<{ id: string }> = ({ id }) => {
   }, [id]);
 
   if (user === null && error) {
-    return <p data-testid="error-text">Not Found</p>;
+    return <p>Not Found</p>;
   }
   if (user === null) {
-    return <p data-testid="loading-text">Loading...</p>;
+    return <p>Loading...</p>;
   }
   return (
-    <div data-testid="user-wrapper">
-      <p style={{ fontWeight: "bold" }} data-testid="user-name">
-        {user.name}
-      </p>
-      <p data-testid="user-username">{user.username}</p>
+    <div>
+      <p style={{ fontWeight: "bold" }}>{user.name}</p>
+      <p>{user.username}</p>
     </div>
   );
 };
