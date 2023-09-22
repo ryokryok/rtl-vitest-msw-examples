@@ -1,18 +1,8 @@
-import { ChangeEvent, FC, useCallback, useState } from "react";
+import { FC } from "react";
 import { describe, test, expect, afterEach } from "vitest";
 import { screen, cleanup } from "@testing-library/react";
 import { setup } from "./testUtils";
-
-const useInput = (initialValue: string = "") => {
-  const [input, setInput] = useState(initialValue);
-
-  const handler = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => setInput(e.target.value),
-    []
-  );
-
-  return { input, handler };
-};
+import { useInput } from "./useInput";
 
 type TestConfig = {
   initialValue: string;
