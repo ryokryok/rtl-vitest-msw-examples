@@ -1,8 +1,8 @@
-import { it, expect, afterEach } from "vitest";
-import { screen, cleanup } from "@testing-library/react";
+import { cleanup, screen } from "@testing-library/react";
 import { useContext } from "react";
-import { setup } from "./testUtils";
+import { afterEach, expect, it } from "vitest";
 import { ThemeContext, ThemeProvider } from "./ThemeContext";
+import { setup } from "./testUtils";
 
 function DisplayTheme() {
 	const { theme } = useContext(ThemeContext);
@@ -13,6 +13,7 @@ function UpdateTheme() {
 	const { update } = useContext(ThemeContext);
 	return (
 		<>
+			{/* biome-ignore lint/a11y/useButtonType: <explanation> */}
 			<button onClick={update}>toggle theme</button>
 		</>
 	);

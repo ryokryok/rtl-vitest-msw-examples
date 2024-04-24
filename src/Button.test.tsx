@@ -1,6 +1,6 @@
-import { type FC, forwardRef, type ComponentPropsWithRef } from "react";
-import { it, expect, vi, afterEach } from "vitest";
-import { screen, cleanup } from "@testing-library/react";
+import { cleanup, screen } from "@testing-library/react";
+import { type ComponentPropsWithRef, type FC, forwardRef } from "react";
+import { afterEach, expect, it, vi } from "vitest";
 import { setup } from "./testUtils";
 
 const Button: FC<ComponentPropsWithRef<"button">> = forwardRef((props, ref) => (

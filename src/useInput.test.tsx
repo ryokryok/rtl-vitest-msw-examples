@@ -1,6 +1,6 @@
+import { cleanup, screen } from "@testing-library/react";
 import type { FC } from "react";
-import { describe, test, expect, afterEach } from "vitest";
-import { screen, cleanup } from "@testing-library/react";
+import { afterEach, describe, expect, test } from "vitest";
 import { setup } from "./testUtils";
 import { useInput } from "./useInput";
 
