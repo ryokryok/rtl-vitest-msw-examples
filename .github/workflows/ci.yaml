@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    name: Main
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+        name: Install
+      - run: corepack enable pnpm
+      - run: pnpm install --frozen-lockfile
+        name: Format and Lint
+      - run: pnpm check
+        name: Unit Test
+      - run: pnpm test
